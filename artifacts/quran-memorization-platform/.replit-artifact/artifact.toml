@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "منصة متابعة حفظ القرآن"
+description = "نظام عربي متكامل لإدارة برامج حفظ القرآن ومتابعة الطلاب والمشرفين، مع خطط دقيقة مرتبطة بالسور والآيات والصفحات، تقييم يومي محسوب، وتقارير تقدم تفاعلية لكل دور."
+version = "1.0.0"
+id = "artifacts/quran-memorization-platform"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26243
+
+[services.development]
+run = "pnpm --filter @workspace/quran-memorization-platform run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/quran-memorization-platform", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/quran-memorization-platform/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26243"
+BASE_PATH = "/"
